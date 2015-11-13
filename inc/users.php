@@ -17,13 +17,13 @@
       $query = $db->query("SELECT * FROM `users`");
       while($user = $query->fetch_object()){
     ?>
-    <tr>
+    <tr id="row<?=$user->uid?>">
       <td><?=$user->uid?></td>
-      <td><?=$user->full_name?></td>
-      <td><?=$user->email?></td>
-      <td><?=$user->dob?></td>
+      <td class="fname"><?=$user->full_name?></td>
+      <td class="email"><?=$user->email?></td>
+      <td class="dob"><?=$user->dob?></td>
       <td>
-            <input type="checkbox" class="switch" id="status<?=$user->uid?>" <?=($user->status==1)?'checked':''?>>
+            <input type="checkbox" class="switch" id="status<?=$user->uid?>" onchange="updateStatus(<?=$user->uid?>)" <?=($user->status==1)?'checked':''?>>
       </td>
       <td><a href="javascript:void()" onclick="editUser(<?=$user->uid?>)" data-toggle="modal" data-target="#userEdit" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i></a></td>
       <td><a href="?page=users&amp;delete=<?=$user->uid?>" class="btn btn-danger" onclick="return confirm('Are you Sure?')"><i class=" glyphicon glyphicon-trash"></i></a></td>
@@ -44,7 +44,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" onclick="updateUserData()">Save changes</button>
       </div>
     </div>
   </div>
